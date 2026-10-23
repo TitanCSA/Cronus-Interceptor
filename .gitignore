@@ -1,0 +1,13 @@
+App/.build/
+.vs/
+*.user
+*.suo
+*.pdb
+*.obj
+*.lib
+*.exe
+*.dll
+*.sys
+*.cab
+*.pfx
+*.key

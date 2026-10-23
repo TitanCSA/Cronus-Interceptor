@@ -1,0 +1,5 @@
+// MIT, TitanCSA. Works with the common cross-platform identifiers.
+main {
+    set_val(PS4_LY, inv(get_ival(PS4_LY)));
+    set_val(PS4_RY, inv(get_ival(PS4_RY)));
+}

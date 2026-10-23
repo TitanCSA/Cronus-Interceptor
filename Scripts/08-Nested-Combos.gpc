@@ -1,0 +1,11 @@
+// MIT, TitanCSA. A sequential combo call waits for its child.
+main { if(event_press(PS4_CROSS)) combo_run(Parent); }
+combo Parent {
+    call(Child);
+    set_val(PS4_CIRCLE, 100); wait(60);
+    wait(60);
+}
+combo Child {
+    set_val(PS4_SQUARE, 100); wait(60);
+    wait(60);
+}

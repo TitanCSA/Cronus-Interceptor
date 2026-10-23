@@ -1,0 +1,11 @@
+// MIT, TitanCSA. The app saves SPVAR values for this script asynchronously.
+int enabled;
+init { enabled = get_pvar(SPVAR_1, 0, 1, 0); }
+main {
+    if(event_press(XB1_MENU)) {
+        enabled = !enabled;
+        set_pvar(SPVAR_1, enabled);
+    }
+    if(enabled) set_val(XB1_LY, inv(get_ival(XB1_LY)));
+    set_val(TRACE_1, enabled);
+}

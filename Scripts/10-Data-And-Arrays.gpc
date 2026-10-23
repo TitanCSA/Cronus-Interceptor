@@ -1,0 +1,8 @@
+// MIT, TitanCSA. Typed one/two-dimensional constant arrays and data reads.
+const uint8 levels[][] = { { 20, 40 }, { 60, 80 } };
+int row;
+main {
+    if(event_press(XB1_MENU)) row = !row;
+    if(get_ival(XB1_A)) set_val(XB1_RT, levels[row][1]);
+    set_val(TRACE_1, levels[row][0]);
+}

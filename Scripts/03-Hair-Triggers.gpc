@@ -1,0 +1,6 @@
+// MIT, TitanCSA. Full output above the chosen trigger threshold.
+define THRESHOLD = 5;
+main {
+    if(get_ival(XB1_LT) > THRESHOLD) set_val(XB1_LT, 100);
+    if(get_ival(XB1_RT) > THRESHOLD) set_val(XB1_RT, 100);
+}

@@ -1,0 +1,5 @@
+// MIT, TitanCSA. Untouched input makes the swap independent of statement order.
+main {
+    set_val(XB1_A, get_ival(XB1_B));
+    set_val(XB1_B, get_ival(XB1_A));
+}

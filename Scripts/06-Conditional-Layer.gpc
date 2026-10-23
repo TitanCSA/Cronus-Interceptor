@@ -1,0 +1,9 @@
+// MIT, TitanCSA. Hold the left bumper to swap the two sticks.
+main {
+    if(get_ival(XB1_LB)) {
+        set_val(XB1_LX, get_ival(XB1_RX));
+        set_val(XB1_LY, get_ival(XB1_RY));
+        set_val(XB1_RX, get_ival(XB1_LX));
+        set_val(XB1_RY, get_ival(XB1_LY));
+    }
+}

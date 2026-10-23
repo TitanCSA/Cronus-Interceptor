@@ -1,0 +1,10 @@
+// MIT, TitanCSA. Tap X/Square: A/Cross then B/Circle, once.
+main {
+    if(event_press(XB1_X)) combo_run(TwoButtons);
+}
+combo TwoButtons {
+    set_val(XB1_A, 100); wait(80);
+    wait(80);
+    set_val(XB1_B, 100); wait(80);
+    wait(80);
+}

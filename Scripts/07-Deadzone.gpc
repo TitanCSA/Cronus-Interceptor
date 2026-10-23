@@ -1,0 +1,8 @@
+// MIT, TitanCSA. A neutral inner area; this differs from GPC deadzone(),
+// which adds an offset to compensate a game's existing deadzone.
+main {
+    if(abs(get_ival(XB1_LX)) < 15) set_val(XB1_LX, 0);
+    if(abs(get_ival(XB1_LY)) < 15) set_val(XB1_LY, 0);
+    if(abs(get_ival(XB1_RX)) < 15) set_val(XB1_RX, 0);
+    if(abs(get_ival(XB1_RY)) < 15) set_val(XB1_RY, 0);
+}
