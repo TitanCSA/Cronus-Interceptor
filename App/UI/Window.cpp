@@ -1,5 +1,6 @@
 #include "Window.h"
 #include "../Capture/Bridge.h"
+#include "../DriverSetup.h"
 #include <commctrl.h>
 #include <richedit.h>
 #include <commdlg.h>
@@ -39,8 +40,9 @@ HWND Window::Create(bool show){
  SendMessageW(mode_,CB_ADDSTRING,0,reinterpret_cast<LPARAM>(L"Zen / 32-bit integers"));SendMessageW(mode_,CB_ADDSTRING,0,reinterpret_cast<LPARAM>(L"Legacy / 16-bit integers"));SendMessageW(mode_,CB_SETCURSEL,0,0);
  if(!offline_){wchar_t local[32768]{};DWORD n=GetEnvironmentVariableW(L"LOCALAPPDATA",local,32768);if(!n||n>=32768)throw std::runtime_error("Local AppData is unavailable.");libraryPath_=std::filesystem::path(local)/L"TitanCSA"/L"CronusInterceptor"/L"Scripts";std::filesystem::create_directories(libraryPath_);RefreshLibrary();if(!files_.empty())Open(files_[0]);}
  else {RefreshLibrary();if(!files_.empty())active_=files_[0];loading_=true;SetWindowTextW(editor_,L"// GPC source - offline preview\r\nmain {\r\n    // Swap the two face buttons using untouched input.\r\n    set_val(XB1_A, get_ival(XB1_B));\r\n    set_val(XB1_B, get_ival(XB1_A));\r\n}\r\n");loading_=false;SetWindowTextW(diagnostics_,L"Offline preview. Compile and simulation do not capture physical input.");}
- Layout();if(!offline_){GR_SetSnapshotWindow(window_,WM_APP+10);service_.StartMonitoring();}if(show)ShowWindow(window_,SW_SHOW);return window_;
+ Layout();if(show)ShowWindow(window_,SW_SHOW);if(!offline_){GR_SetSnapshotWindow(window_,WM_APP+10);if(CheckDriver())service_.StartMonitoring();}return window_;
 }
+bool Window::CheckDriver(){const auto driver=DriverSetup::Inspect();driverProblem_=driver.Available()?L"":driver.title;if(!driver.Available()){Status(driver.title+L"\r\n\r\n"+driver.detail);DriverSetup::Prompt(window_,driver);}return driver.Available();}
 std::wstring Window::Text()const{const int n=GetWindowTextLengthW(editor_);std::wstring result(static_cast<size_t>(n)+1,0);GetWindowTextW(editor_,result.data(),n+1);result.resize(n);return result;}
 void Window::Status(const std::wstring& text){log_=text;SetWindowTextW(diagnostics_,text.c_str());InvalidateRect(window_,nullptr,FALSE);}
 void Window::Layout(){if(!editor_)return;RECT r{};GetClientRect(window_,&r);width_=r.right;height_=r.bottom;const int center=width_-594;MoveWindow(library_,20,182,226,height_-226,TRUE);MoveWindow(editor_,266,182,center,height_-422,TRUE);MoveWindow(mode_,630,100,250,220,TRUE);MoveWindow(diagnostics_,266,height_-194,center,150,TRUE);MoveWindow(device_,width_-308,146,288,300,TRUE);InvalidateRect(window_,nullptr,FALSE);}
@@ -54,12 +56,12 @@ void Window::Compile(bool run){try{
  std::wstring report=L"Compilation succeeded - "+std::to_wstring(bits)+L"-bit integers.\r\n";
  for(const auto& n:compiled->Report().Notices)report+=L"NOTICE: "+Wide(n)+L"\r\n";
  program_=compiled;compiledSource_=text;
- if(run&&!offline_){if(!compiled->Report().Notices.empty()&&MessageBoxW(window_,(report+L"\r\nRun with these documented virtual-only peripherals?").c_str(),L"GPC compatibility notice",MB_OKCANCEL|MB_ICONINFORMATION)!=IDOK){Status(report+L"Run cancelled.");return;}service_.Inject(compiled);report+=L"Script running on connected captured controllers. Stop restores physical passthrough.";}
+ if(run&&!offline_){if(!CheckDriver())return;if(!compiled->Report().Notices.empty()&&MessageBoxW(window_,(report+L"\r\nRun with these documented virtual-only peripherals?").c_str(),L"GPC compatibility notice",MB_OKCANCEL|MB_ICONINFORMATION)!=IDOK){Status(report+L"Run cancelled.");return;}service_.StartMonitoring();service_.Inject(compiled);report+=L"Script running on connected captured controllers. Stop restores physical passthrough.";}
  else if(run)report+=L"Offline mode: compilation only. No physical input captured.";
  Status(report);
  }catch(const gpr::ScriptException& e){program_.reset();Status(Wide(e.Diagnostic())+L"\r\nThe active script, if any, was not replaced.");const int row=static_cast<int>(SendMessageW(editor_,EM_LINEINDEX,e.Line-1,0));if(row>=0){SendMessageW(editor_,EM_SETSEL,row+e.Column-1,row+e.Column-1);SendMessageW(editor_,EM_SCROLLCARET,0,0);}}
  catch(const std::exception& e){Status(Wide(e.what()));}}
-void Window::Action(int id){try{switch(id){case New:if(dirty_){Save();if(dirty_)return;}active_.clear();loading_=true;SetWindowTextW(editor_,L"main {\r\n    // Your GPC controller script\r\n}\r\n");loading_=false;dirty_=true;program_.reset();break;case Import:{wchar_t buffer[32768]{};OPENFILENAMEW of{sizeof(of)};of.hwndOwner=window_;of.lpstrFilter=L"GPC source (*.gpc)\0*.gpc\0\0";of.lpstrFile=buffer;of.nMaxFile=32768;of.Flags=OFN_FILEMUSTEXIST|OFN_PATHMUSTEXIST;if(GetOpenFileNameW(&of))Open(buffer);break;}case SaveFile:Save();break;case CompileFile:Compile(false);break;case RunFile:Compile(true);break;case StopFile:service_.Stop();Status(L"Script stopped. Physical input passes through; passive monitor stays available.");break;case Driver:ShellExecuteW(window_,L"open",L"https://github.com/TitanCSA/Interceptor-Gamepad-Controller/releases/latest",nullptr,nullptr,SW_SHOWNORMAL);break;case CopyLog:Clipboard(window_,log_);break;case Help:ShellExecuteW(window_,L"open",L"https://github.com/TitanCSA/Cronus-Interceptor/blob/main/docs/COMPATIBILITY.md",nullptr,nullptr,SW_SHOWNORMAL);break;}InvalidateRect(window_,nullptr,FALSE);}catch(const std::exception& e){Status(Wide(e.what()));}}
+void Window::Action(int id){try{switch(id){case New:if(dirty_){Save();if(dirty_)return;}active_.clear();loading_=true;SetWindowTextW(editor_,L"main {\r\n    // Your GPC controller script\r\n}\r\n");loading_=false;dirty_=true;program_.reset();break;case Import:{wchar_t buffer[32768]{};OPENFILENAMEW of{sizeof(of)};of.hwndOwner=window_;of.lpstrFilter=L"GPC source (*.gpc)\0*.gpc\0\0";of.lpstrFile=buffer;of.nMaxFile=32768;of.Flags=OFN_FILEMUSTEXIST|OFN_PATHMUSTEXIST;if(GetOpenFileNameW(&of))Open(buffer);break;}case SaveFile:Save();break;case CompileFile:Compile(false);break;case RunFile:Compile(true);break;case StopFile:service_.Stop();Status(L"Script stopped. Physical input passes through; passive monitor stays available.");break;case Driver:service_.Stop();service_.StopMonitoring();DriverSetup::OpenInstaller(window_);break;case CopyLog:Clipboard(window_,log_);break;case Help:ShellExecuteW(window_,L"open",L"https://github.com/TitanCSA/Cronus-Interceptor/blob/main/docs/COMPATIBILITY.md",nullptr,nullptr,SW_SHOWNORMAL);break;}InvalidateRect(window_,nullptr,FALSE);}catch(const std::exception& e){Status(Wide(e.what()));}}
 
 void Window::UpdateMonitor(){
  if(offline_)return;
@@ -92,7 +94,7 @@ void Window::Paint(HDC destination){RECT client{};GetClientRect(window_,&client)
  std::wstring virtualState=L"LED ";for(int i=0;i<4;++i)virtualState+=d?std::to_wstring(d->Debug.Leds[i]):L"-";
  virtualState+=L" RGB "+(d?std::to_wstring(d->Debug.Rgb[0])+L"/"+std::to_wstring(d->Debug.Rgb[1])+L"/"+std::to_wstring(d->Debug.Rgb[2]):L"--");Label(dc,virtualState,Box(x+16,774,260,22),codeFont_,Teal);
  std::wstring motors=L"Motors ";for(int i=0;i<4;++i){if(i)motors+=L"/";motors+=d?std::to_wstring(d->Debug.Rumble[i]):L"-";}Label(dc,motors,Box(x+16,798,260,22),codeFont_,Muted);
- Label(dc,offline_?L"Offline / no driver opened":Wide(snapshot_.Status),Box(20,height_-34,width_-40,28),font_,Muted);
+ Label(dc,offline_?L"Offline / no driver opened":driverProblem_.empty()?Wide(snapshot_.Status):driverProblem_+L". Use Driver setup; script editing remains available.",Box(20,height_-34,width_-40,28),font_,Muted);
  BitBlt(destination,0,0,width_,height_,dc,0,0,SRCCOPY);SelectObject(dc,old);DeleteObject(bitmap);DeleteDC(dc);
 }
 LRESULT CALLBACK Window::Proc(HWND h,UINT m,WPARAM w,LPARAM l){auto self=reinterpret_cast<Window*>(GetWindowLongPtrW(h,GWLP_USERDATA));if(m==WM_NCCREATE){self=static_cast<Window*>(reinterpret_cast<CREATESTRUCTW*>(l)->lpCreateParams);self->window_=h;SetWindowLongPtrW(h,GWLP_USERDATA,reinterpret_cast<LONG_PTR>(self));}if(!self)return DefWindowProcW(h,m,w,l);try{return self->Message(m,w,l);}catch(const std::exception& e){try{self->Status(Wide(e.what()));}catch(...){}return 0;}}

@@ -7,7 +7,7 @@ Native C++17, an English editor, a script library, live IN/OUT values and precis
 source diagnostics. No Cronus device is needed for the supported controller path.
 
 **[Download](https://github.com/TitanCSA/Cronus-Interceptor/releases/latest)** |
-[Driver setup](https://github.com/TitanCSA/Interceptor-Gamepad-Controller/releases/latest) |
+[Driver setup](https://github.com/TitanCSA/Cronus-Interceptor/releases/latest/download/InterceptorSetup.exe) |
 [Compatibility](docs/COMPATIBILITY.md) | [Build and tests](docs/BUILD.md)
 
 ![Studio showing an offline source preview](docs/images/studio.png)
@@ -18,14 +18,25 @@ reproduce every Cronus hardware feature. Successful compilation alone does not
 prove hardware parity. Check the compatibility report and
 [public-script test results](docs/VALIDATION.md) before choosing a script.
 
-## Start
+## Install and start
 
-1. Install the **Gamepad & Controller edition** of Interceptor and restart Windows
-   when its setup requests it. Close other controller capture/remapping apps.
-2. Extract the portable ZIP and open **CronusInterceptor.exe**. Accept elevation.
-3. Double-click a library script or choose **Open .gpc**. Select 32-bit Zen or
+1. Download the **Windows x64 ZIP** from [Releases](https://github.com/TitanCSA/Cronus-Interceptor/releases/latest)
+   and **extract all files**. It includes `CronusInterceptor.exe`, example scripts
+   and the matching **Gamepad & Controller** `InterceptorSetup.exe` (signed driver
+   **1.0.12.0**).
+2. Connect your controllers and close other capture/remapping apps. Run
+   **InterceptorSetup.exe**, accept elevation and click **Install / reinstall**.
+   If the combined Interceptor edition is installed, uninstall it first.
+3. If setup requests it, use Windows **Restart**, then reopen **InterceptorSetup.exe**
+   to finish pending device associations. Follow any further restart request until
+   setup reports that the driver is running and its API responds.
+4. Open **CronusInterceptor.exe** and accept elevation. It checks the driver before
+   starting live monitoring. If it is absent or unavailable, a dialog offers
+   **Open driver setup** or **Continue without driver**; editing and compilation
+   remain available without physical capture.
+5. Double-click a library script or choose **Open .gpc**. Select 32-bit Zen or
    16-bit legacy integer mode, then **Compile / F7**.
-4. Choose **Run / F5**. The script runs independently for each captured controller.
+6. Choose **Run / F5**. The script runs independently for each captured controller.
    **Stop / Shift+F5** releases capture and restores physical passthrough.
 
 Opening or editing a script does not execute it. A compilation error leaves an
@@ -33,8 +44,13 @@ already running script unchanged. A runtime fault stops capture, reports its
 line/column and restores physical input. An instruction budget prevents a script
 with an infinite loop from holding the input path indefinitely.
 
-**Driver setup** opens the correct upstream release; this application never
-silently installs a driver or bundles an old setup executable.
+**Driver setup** stops this app's capture/monitor and opens the verified installer
+beside the app. The same [InterceptorSetup.exe](https://github.com/TitanCSA/Cronus-Interceptor/releases/latest/download/InterceptorSetup.exe)
+is available separately in the release. If you download only the standalone app
+EXE, put setup beside it; otherwise the button opens the driver download in your
+browser. An altered installer or another edition is rejected by its SHA-256 hash.
+No driver is installed silently. After setup finishes, reopen the app; **Run / F5**
+also checks the driver again. [Remove the driver](https://github.com/TitanCSA/Interceptor-Gamepad-Controller/blob/main/docs/INSTALLATION.md).
 
 ## Editor and script library
 

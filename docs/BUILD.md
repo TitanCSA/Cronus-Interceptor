@@ -45,3 +45,18 @@ for results and the distinction between smoke tests and behavior assertions.
 The capture bridge and parts of the bytecode engine originate from TitanCSA's
 MIT-licensed GamePad Remapper. This fork changes GPC identifier numbering,
 language behavior, cycle scheduling, persistence and HID/native controller mapping.
+
+## Driver setup packaging
+
+Normal startup checks driver metadata and registration before capture/monitoring.
+Missing, unavailable and access-denied states have separate installation guidance.
+The check never creates a capture or starts the allowance.
+
+`Build.ps1 -Target Package` downloads the pinned Gamepad & Controller 1.0.12.0
+GUI installer when it is not already cached. Packaging verifies its SHA-256,
+product name and version, then includes it in the ZIP and as `InterceptorSetup.exe`.
+Offline compilation and tests do not download or install the driver.
+
+`--check-driver report.json` writes a read-only availability report; it does not
+start capture or monitoring. It does not request elevation, so a non-elevated
+caller may receive an access-denied state even when the driver is installed.
