@@ -1,0 +1,12 @@
+{
+    "Schema":  1,
+    "Version":  "0.1.1",
+    "Driver":  "Interceptor-Gamepad-Controller",
+    "DriverVersion":  "1.0.12.0",
+    "DriverRelease":  "v1.0.12.0-demo",
+    "SdkVersion":  "1.0.4.2",
+    "SignedKernelSHA256":  "f2b9df8f8ea216560bca401c7084acc6127a759a58fba57664eb1e8029440fa8",
+    "TrialSeconds":  3600,
+    "ClockRequired":  true,
+    "InstallerBundled":  false
+}

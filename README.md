@@ -91,9 +91,7 @@ Gamepad & Controller SDK**, inspired by
 Application and SDK sources are included; **kernel source is not published**.
 The app is MIT licensed; driver binaries have [separate terms](DRIVER-BINARY-LICENSE.txt).
 
-The installed driver's demo allowance applies to all apps of that edition. Its
-new one-hour build is awaiting Microsoft signing; until replaced, the previously
-published signed driver retains its original allowance. Expiry restores
+The installed driver's demo allowance applies to all apps of that edition. Install the current Microsoft-signed **one-hour** driver (kernel **1.0.12.0**); restart Windows after upgrading from an older demo clock. Expiry restores
 passthrough. Use **Windows Restart** to renew the allowance. For an unrestricted
 driver, DM **`titancsa`** on Discord.
 

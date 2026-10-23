@@ -1,7 +1,7 @@
 $ErrorActionPreference='Stop'
 $root=Split-Path $PSScriptRoot -Parent
 $exe=Join-Path $root 'App\.build\Release\bin\CronusInterceptor.exe'
-if((Get-Item -LiteralPath $exe).VersionInfo.FileVersion -cne '0.1.0'){throw 'Unexpected executable version'}
+if((Get-Item -LiteralPath $exe).VersionInfo.FileVersion -cne '0.1.1'){throw 'Unexpected executable version'}
 $bytes=[IO.File]::ReadAllBytes($exe);$pe=[BitConverter]::ToInt32($bytes,0x3c)
 if([BitConverter]::ToUInt16($bytes,$pe+24)-ne 0x20b -or [BitConverter]::ToUInt32($bytes,$pe+24+112+14*8)-ne 0){throw 'Expected native Windows x64 app'}
 if([Text.Encoding]::ASCII.GetString($bytes).IndexOf('clang_rt.asan',[StringComparison]::OrdinalIgnoreCase)-ge 0){throw 'Do not package an AddressSanitizer build'}
@@ -12,7 +12,7 @@ foreach($name in 'README.md','LICENSE','DRIVER-BINARY-LICENSE.txt','THIRD-PARTY-
 foreach($name in 'Scripts','docs'){Copy-Item -LiteralPath (Join-Path $root $name) -Destination $stage -Recurse}
 Add-Type -AssemblyName System.IO.Compression
 Add-Type -AssemblyName System.IO.Compression.FileSystem
-$path=Join-Path $dist 'Cronus-Interceptor-0.1.0-Windows-x64.zip';$stream=[IO.File]::Open($path,[IO.FileMode]::Create)
+$path=Join-Path $dist 'Cronus-Interceptor-0.1.1-Windows-x64.zip';$stream=[IO.File]::Open($path,[IO.FileMode]::Create)
 try{$zip=[IO.Compression.ZipArchive]::new($stream,[IO.Compression.ZipArchiveMode]::Create,$true);try{foreach($file in Get-ChildItem -LiteralPath $stage -Recurse -File){[void][IO.Compression.ZipFileExtensions]::CreateEntryFromFile($zip,$file.FullName,$file.FullName.Substring($stage.Length+1).Replace('\','/'),[IO.Compression.CompressionLevel]::Optimal)}}finally{$zip.Dispose()}}finally{$stream.Dispose()}
 Copy-Item -LiteralPath $exe -Destination $dist -Force
 $lines=foreach($f in @($path,(Join-Path $dist 'CronusInterceptor.exe'))){(Get-FileHash -LiteralPath $f).Hash.ToLowerInvariant()+'  '+[IO.Path]::GetFileName($f)}
