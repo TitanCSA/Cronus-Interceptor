@@ -23,7 +23,7 @@ prove hardware parity. Check the compatibility report and
 1. Download the **Windows x64 ZIP** from [Releases](https://github.com/TitanCSA/Cronus-Interceptor/releases/latest)
    and **extract all files**. It includes `CronusInterceptor.exe`, example scripts
    and the matching **Gamepad & Controller** `InterceptorSetup.exe` (signed driver
-   **1.0.12.0**).
+   **1.0.13.0**).
 2. Connect your controllers and close other capture/remapping apps. Run
    **InterceptorSetup.exe**, accept elevation and click **Install / reinstall**.
    If the combined Interceptor edition is installed, uninstall it first.
@@ -107,7 +107,7 @@ Gamepad & Controller SDK**, inspired by
 Application and SDK sources are included; **kernel source is not published**.
 The app is MIT licensed; driver binaries have [separate terms](DRIVER-BINARY-LICENSE.txt).
 
-The installed driver's demo allowance applies to all apps of that edition. Install the current Microsoft-signed **one-hour** driver (kernel **1.0.12.0**); restart Windows after upgrading from an older demo clock. Expiry restores
+The installed driver's demo allowance applies to all apps of that edition. Install the current Microsoft-signed **one-hour** driver (kernel **1.0.13.0**); restart Windows after upgrading from an older demo clock. Expiry restores
 passthrough. Use **Windows Restart** to renew the allowance. For an unrestricted
 driver, DM **`titancsa`** on Discord.
 

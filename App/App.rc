@@ -1,7 +1,7 @@
 #include <windows.h>
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 0,1,2,0
- PRODUCTVERSION 0,1,2,0
+ FILEVERSION 0,1,3,0
+ PRODUCTVERSION 0,1,3,0
  FILEFLAGSMASK 0x3fL
  FILEFLAGS 0
  FILEOS VOS_NT_WINDOWS32
@@ -13,9 +13,9 @@ BEGIN
   BEGIN
    VALUE "CompanyName", "TitanCSA"
    VALUE "FileDescription", "Cronus Interceptor GPC Script Studio"
-   VALUE "FileVersion", "0.1.2"
+   VALUE "FileVersion", "0.1.3"
    VALUE "ProductName", "Cronus Interceptor"
-   VALUE "ProductVersion", "0.1.2"
+   VALUE "ProductVersion", "0.1.3"
   END
  END
  BLOCK "VarFileInfo"

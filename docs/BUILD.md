@@ -52,7 +52,7 @@ Normal startup checks driver metadata and registration before capture/monitoring
 Missing, unavailable and access-denied states have separate installation guidance.
 The check never creates a capture or starts the allowance.
 
-`Build.ps1 -Target Package` downloads the pinned Gamepad & Controller 1.0.12.0
+`Build.ps1 -Target Package` downloads the pinned Gamepad & Controller 1.0.13.0
 GUI installer when it is not already cached. Packaging verifies its SHA-256,
 product name and version, then includes it in the ZIP and as `InterceptorSetup.exe`.
 Offline compilation and tests do not download or install the driver.

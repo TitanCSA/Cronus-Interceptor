@@ -10,7 +10,7 @@
 
 namespace DriverSetup {
 namespace {
-constexpr auto InstallerHash="949ea2cd7d1b624ba6f9a830c1b95f77356d523cf9bf2fd86408a5888f8384c2";
+constexpr auto InstallerHash="64b451334c3eca1b2a8c2941e72bf84983675098defd0b0269f4d945dbb2c75e";
 constexpr auto Download=L"https://github.com/TitanCSA/Interceptor-Gamepad-Controller/releases/latest/download/InterceptorSetup.exe";
 struct File {HANDLE value=INVALID_HANDLE_VALUE;~File(){if(value!=INVALID_HANDLE_VALUE)CloseHandle(value);}};
 struct Hash {
@@ -61,7 +61,7 @@ void OpenInstaller(HWND owner){
         if(reinterpret_cast<INT_PTR>(ShellExecuteW(owner,L"open",Download,nullptr,nullptr,SW_SHOWNORMAL))<=32)throw std::runtime_error("Could not open the driver download. Download InterceptorSetup.exe from the app release.");return;
     }
     LARGE_INTEGER size{};if(!GetFileSizeEx(file.value,&size)||size.QuadPart<1||size.QuadPart>67108864)throw std::runtime_error("Invalid adjacent driver installer size.");
-    if(Digest(file.value)!=InstallerHash)throw std::runtime_error("The adjacent InterceptorSetup.exe does not match this app's verified Gamepad & Controller 1.0.12.0 installer. Download the complete app ZIP again.");
+    if(Digest(file.value)!=InstallerHash)throw std::runtime_error("The adjacent InterceptorSetup.exe does not match this app's verified Gamepad & Controller 1.0.13.0 installer. Download the complete app ZIP again.");
     SHELLEXECUTEINFOW launch{sizeof(launch)};launch.fMask=SEE_MASK_NOASYNC;launch.hwnd=owner;launch.lpVerb=L"open";launch.lpFile=path.c_str();launch.nShow=SW_SHOWNORMAL;
     if(!ShellExecuteExW(&launch))throw std::system_error(GetLastError(),std::system_category(),"Launch verified driver setup");
 }
