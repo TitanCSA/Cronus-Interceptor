@@ -6,6 +6,17 @@ connected Windows controllers using the
 Native C++17, an English editor, a script library, live IN/OUT values and precise
 source diagnostics. No Cronus device is needed for the supported controller path.
 
+<!-- full-version-contact:start -->
+> [!IMPORTANT]
+> **Get the full driver version without demo restrictions**
+>
+> **Discord username: `titancsa`**
+>
+> Open Discord, choose **Friends > Add Friend**, enter **`titancsa`**, then send a direct message. Ask for the **full driver version without the demo time limit**, and mention **Cronus Interceptor**.
+>
+> The demo limit belongs to **Interceptor Gamepad & Controller**, the driver used by this project. Ask for pricing and the appropriate license / activation instructions; the application or wrapper source keeps its existing license.
+<!-- full-version-contact:end -->
+
 **[Download](https://github.com/TitanCSA/Cronus-Interceptor/releases/latest)** |
 [Driver setup](https://github.com/TitanCSA/Cronus-Interceptor/releases/latest/download/InterceptorSetup.exe) |
 [Compatibility](docs/COMPATIBILITY.md) | [Build and tests](docs/BUILD.md)
