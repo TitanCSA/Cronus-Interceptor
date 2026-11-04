@@ -112,10 +112,16 @@ Unsupported calls produce diagnostics; they are not silently discarded.
 
 ## Driver, source and intended use
 
+The matching Interceptor-Gamepad-Controller demo driver source is available; see
+[driver/README.md](driver/README.md) for build instructions and separate
+evaluation-source terms. Those terms apply to Titan-authored driver code. Third-party
+source licenses and existing application/SDK licenses remain applicable. Full/commercial
+implementation and private signing or activation material are excluded.
+
 This project is an **example of building an application with the Interceptor
 Gamepad & Controller SDK**, inspired by
 [GamePad Remapper](https://github.com/TitanCSA/GamePad-Remapper).
-Application and SDK sources are included; **kernel source is not published**.
+Application and SDK sources are included; **Demo/evaluation driver source is documented in [driver/README.md](driver/README.md)**.
 The app is MIT licensed; driver binaries have [separate terms](DRIVER-BINARY-LICENSE.txt).
 
 The installed driver's demo allowance applies to all apps of that edition. Install the current Microsoft-signed **one-hour** driver (kernel **1.0.13.0**); restart Windows after upgrading from an older demo clock. Expiry restores

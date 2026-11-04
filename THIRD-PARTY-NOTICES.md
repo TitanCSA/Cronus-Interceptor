@@ -3,7 +3,7 @@
 - Based in part on TitanCSA's MIT-licensed GamePad Remapper capture and bytecode
   implementation. The complete MIT license is in `LICENSE`.
 - Uses the TitanCSA Interceptor Gamepad & Controller SDK under `Interceptor`.
-  Kernel source and driver binaries are not included in this repository.
+  Matching demo driver source is documented in [driver/README.md](driver/README.md); driver binaries retain their separate distribution terms.
 - Uses Windows system RichEdit, GDI, WIC, HID and device APIs.
 - Optional corpus tests download original scripts from `cypher139/cronus` and
   `Fadexz/COD-Pro`, both GPL-3.0 repositories. Their source and licenses remain
