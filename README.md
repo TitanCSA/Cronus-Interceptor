@@ -3,7 +3,11 @@
 <!-- simple-start:start -->
 Open and inspect a GPC gamepad script on Windows.
 
-**Start here.** Start by opening a sample in the editor and checking its compatibility messages.
+[First steps](#first-steps) · [Develop](https://github.com/TitanCSA/Cronus-Interceptor/tree/main) · [Maintain](https://github.com/TitanCSA/sdk-packages/blob/main/CONTRIBUTING.md)
+
+## First steps
+
+Start by opening a sample in the editor and checking its compatibility messages.
 <!-- simple-start:end -->
 
 <!-- full-version-contact:start -->
