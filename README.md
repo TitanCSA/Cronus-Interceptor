@@ -1,5 +1,15 @@
 # Cronus Interceptor - GPC Controller Script Studio for Windows
 
+<!-- full-version-contact:start -->
+> [!IMPORTANT]
+> **Get the version without the one-hour demo limit**
+>
+> **Discord · `titancsa`**. Open [Discord](https://discord.com/app), choose **Friends → Add Friend**, enter **`titancsa`** and send a message.
+> Send the project name and ask for its full version. TitanCSA will share the purchase details privately.
+>
+> **FR · Version sans la limite d’une heure.** Ajoute **`titancsa`** sur Discord et envoie le nom du projet. Le lien d’achat est communiqué en privé.
+<!-- full-version-contact:end -->
+
 Open, edit, compile and run compatible **Cronus `.gpc` source scripts** on your
 connected Windows controllers using the
 [Interceptor Gamepad & Controller kernel filter driver](https://github.com/TitanCSA/Interceptor-Gamepad-Controller).
@@ -127,13 +137,4 @@ with applicable law and service rules. The author does not authorize unlawful
 use and disclaims warranties and liability to the extent permitted by applicable
 law. See [LICENSE](LICENSE); mandatory legal rights remain unaffected.
 
-<!-- full-version-contact:start -->
-> [!IMPORTANT]
-> **Get the full driver version without demo restrictions**
->
-> **Discord username: `titancsa`**
->
-> Open Discord, choose **Friends > Add Friend**, enter **`titancsa`**, then send a direct message. Ask for the **full driver version without the demo time limit**, and mention **Cronus Interceptor**.
->
-> The demo limit belongs to **Interceptor Gamepad & Controller**, the driver used by this project. Ask for pricing and the appropriate license / activation instructions; the application or wrapper source keeps its existing license.
-<!-- full-version-contact:end -->
+
